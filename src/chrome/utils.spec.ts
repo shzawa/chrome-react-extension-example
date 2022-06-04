@@ -51,7 +51,7 @@ const tabs: Tab[] = [
   }
 ]
 
-test.skip('renders learn react link', async () => {
+test.skip('getCurrentTabUrl', async () => {
   jest.spyOn(utils, 'getChromeTabs').mockResolvedValue(tabs)
   await utils.getCurrentTabUrl((url) => {
     expect(url).toBe('https://www.google.com')
