@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ChromeMessage, Sender } from "../types";
 import { getCurrentTabUId, getCurrentTabUrl } from "../chrome/utils";
 
@@ -7,7 +7,7 @@ export const Home = () => {
     const [url, setUrl] = useState<string>('');
     const [responseFromContent, setResponseFromContent] = useState<string>('');
 
-    let {push} = useHistory();
+    const navigate = useNavigate();
 
     /**
      * Get current URL
@@ -66,7 +66,7 @@ export const Home = () => {
                     {responseFromContent}
                 </p>
                 <button onClick={() => {
-                    push('/about')
+                    navigate('/about')
                 }}>About page
                 </button>
             </header>

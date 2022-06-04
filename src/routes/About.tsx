@@ -1,14 +1,14 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const About = () => {
-    let {push} = useHistory();
+    const navigate = useNavigate();
     return (
         <div className="App">
             <header className="App-header">
                 <p>About</p>
                 <button onClick={() => {
-                    push('/')
+                    navigate('/')
                 }}>Home page
                 </button>
             </header>

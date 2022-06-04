@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { About } from "./routes/About";
 import { Home } from "./routes/Home";
 
@@ -7,13 +7,15 @@ import './App.css';
 
 export const App = () => {
     return (
-        <Switch>
-            <Route path="/about">
+        <Routes>
+            <Route path="/about" element={
                 <About/>
+            }>
             </Route>
-            <Route path="/">
+            <Route path="/" element={
                 <Home/>
+            }>
             </Route>
-        </Switch>
+        </Routes>
     )
 };
