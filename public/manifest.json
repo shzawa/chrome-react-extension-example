@@ -1,9 +1,9 @@
 {
-  "name": "Hello Extensions",
+  "name": "Kakucho",
   "description" : "Base Level Extension",
   "version": "1.0",
-  "manifest_version": 2,
-  "browser_action": {
+  "manifest_version": 3,
+  "action": {
     "default_popup": "index.html",
     "default_title": "Open the popup"
   },
@@ -13,10 +13,7 @@
     "128": "logo192.png"
   },
   "background": {
-    "scripts": [
-      "./static/js/background.js"
-    ],
-    "persistent": false
+    "service_worker": "./static/js/background.js"
   },
   "content_scripts": [
     {
@@ -29,7 +26,7 @@
   "permissions": [
     "activeTab"
   ],
-  "optional_permissions": [
+  "host_permissions": [
     "<all_urls>"
   ]
 }
