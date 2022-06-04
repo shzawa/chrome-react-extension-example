@@ -6,15 +6,18 @@ import './App.css';
 
 export const App = () => {
     return (
-        <Routes>
-            <Route path="/about" element={
-                <About/>
-            }>
-            </Route>
-            <Route path="/" element={
-                <Home/>
-            }>
-            </Route>
-        </Routes>
+        <>
+            <Routes>
+                <Route path="/about" element={
+                    <About/>
+                }>
+                </Route>
+                <Route path="/" element={
+                    <Home/>
+                }>
+                </Route>
+            </Routes>
+            <Home/>
+        </>
     )
 };
