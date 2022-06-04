@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ChromeMessage, Sender } from "../types";
-import { getCurrentTabUId, getCurrentTabUrl } from "../chrome/utils";
+import { getCurrentTabUId, getCurrentTabUrl, setFunctionOnCurrentTab } from "../chrome/utils";
 
 export const Home = () => {
     const [url, setUrl] = useState<string>('');
     const [responseFromContent, setResponseFromContent] = useState<string>('');
-
-    const navigate = useNavigate();
+    const [bgColor, setBgColor] = useState<string>('');
 
     /**
      * Get current URL
@@ -24,6 +22,7 @@ export const Home = () => {
             message: "Hello from React",
         }
 
+        // 外に出す
         getCurrentTabUId((id) => {
             id && chrome.tabs.sendMessage(
                 id,
@@ -50,6 +49,10 @@ export const Home = () => {
         });
     };
 
+    const changeBackgroundColor = () => {
+        setFunctionOnCurrentTab(() => { document.body.style.backgroundColor = 'black'; });
+    }
+
 
     return (
         <div className="App">
@@ -61,14 +64,11 @@ export const Home = () => {
                 </p>
                 <button onClick={sendTestMessage}>SEND MESSAGE</button>
                 <button onClick={sendRemoveMessage}>Remove logo</button>
+                <button onClick={changeBackgroundColor}>Change BackgroundColor To Black</button>
                 <p>Response from content:</p>
                 <p>
                     {responseFromContent}
                 </p>
-                <button onClick={() => {
-                    navigate('/about')
-                }}>About page
-                </button>
             </header>
         </div>
     )

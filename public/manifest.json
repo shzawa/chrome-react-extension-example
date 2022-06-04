@@ -20,11 +20,12 @@
       "matches": ["<all_urls>"],
       "js": ["./static/js/content.js"],
       "all_frames": false,
-      "run_at": "document_end"
+      "run_at":"document_start"
     }
   ],
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>"

@@ -22,7 +22,7 @@ const messagesFromReactAppListener = (
     }
 
     if (isValidated && message.message === "delete logo") {
-        const logo = document.getElementById('hplogo');
+        const logo = Array.from(document.getElementsByClassName('s-topbar--logo'))[0]
         logo?.parentElement?.removeChild(logo)
     }
 }
@@ -36,5 +36,3 @@ const main = () => {
 }
 
 main();
-
-
