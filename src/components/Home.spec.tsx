@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import * as utils from '../chrome/utils';
+import  utils from '../chrome/utils';
 import { Home } from './Home'
-import { chrome } from 'jest-chrome'
+Object.assign(global, require('jest-chrome'));
 
 type MutedInfo = {
   muted: boolean;
@@ -51,13 +51,13 @@ const tabs: Tab[] = [
   }
 ]
 
-test.skip('renders learn react link', () => {
-  (chrome.tabs.query as jest.Mock).mockImplementation(() => Promise.resolve(tabs))
-
-  // const mockGetChromeTabs = jest.spyOn(utils, 'getChromeTabs');
-  // mockGetChromeTabs.mockReturnValue()
+test('renders learn react link', async () => {
+  const getChromeTabsSpy = jest.spyOn(utils, 'getChromeTabs').mockImplementation(() => Promise.resolve(tabs));
 
   render(<Home />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(getChromeTabsSpy).toBeCalled();
+
+  const linkElement  = await screen.findByText('https://www.google.com')
+  expect(linkElement).toBeTruthy()
+
 });

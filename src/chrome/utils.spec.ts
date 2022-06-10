@@ -1,40 +1,8 @@
-import { isCryptoKey } from 'util/types';
-import * as utils from '../chrome/utils';
-Object.assign(global, require('jest-chrome'))
+import utils from '../chrome/utils';
+type ChromeTabTypes = chrome.tabs.Tab;
+Object.assign(global, require('jest-chrome'));
 
-
-type MutedInfo = {
-  muted: boolean;
-  reason?: string | undefined;
-  extensionId?: string | undefined;
-}
-
-type Tab = {
-  status?: string | undefined;
-  index: number;
-  openerTabId?: number | undefined;
-  title?: string | undefined;
-  url?: string | undefined;
-  pendingUrl?: string | undefined;
-  pinned: boolean;
-  highlighted: boolean;
-  windowId: number;
-  active: boolean;
-  favIconUrl?: string | undefined;
-  id?: number | undefined;
-  incognito: boolean;
-  selected: boolean;
-  audible?: boolean | undefined;
-  discarded: boolean;
-  autoDiscardable: boolean;
-  mutedInfo?: MutedInfo | undefined;
-  width?: number | undefined;
-  height?: number | undefined;
-  sessionId?: string | undefined;
-  groupId: number;
-}
-
-const tabs: Tab[] = [
+const tabs: ChromeTabTypes[] = [
   {
     url: 'https://www.google.com',
     id: 0,
@@ -49,21 +17,19 @@ const tabs: Tab[] = [
     autoDiscardable: false,
     groupId: 0,
   }
-]
+];
 
-test.skip('getCurrentTabUrl', async () => {
-  jest.spyOn(utils, 'getChromeTabs').mockResolvedValue(tabs)
+test('getCurrentTabUrl', async () => {
+  jest.spyOn(utils, 'getChromeTabs').mockImplementation(() => Promise.resolve(tabs));
+
   await utils.getCurrentTabUrl((url) => {
-    expect(url).toBe('https://www.google.com')
-  })
-
-
-  // const mockGetChromeTabs = jest.spyOn(utils, 'getChromeTabs');
-  // mockGetChromeTabs.mockReturnValue()
+    expect(url).toBe('https://www.google.com');
+  });
 });
 
 test('mock', async () => {
-  jest.spyOn(utils, 'getChromeTabs').mockResolvedValue(tabs)
-  const actual = await utils.getChromeTabs()
-  expect(actual).toMatchObject([{ id: 0, url: 'https://www.google.com' }])
-})
+  jest.spyOn(utils, 'getChromeTabs').mockImplementation(() => Promise.resolve(tabs));
+
+  const actual = await utils.getChromeTabs();
+  expect(actual).toMatchObject([{ id: 0, url: 'https://www.google.com' }]);
+});

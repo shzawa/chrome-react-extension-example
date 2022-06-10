@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
 import { ChromeMessage, Sender } from "../types";
-import { getCurrentTabUId, getCurrentTabUrl, setFunctionOnCurrentTab } from "../chrome/utils";
+import utils from "../chrome/utils";
 
 export const Home = () => {
     const [url, setUrl] = useState<string>('');
     const [responseFromContent, setResponseFromContent] = useState<string>('');
-    const [bgColor, setBgColor] = useState<string>('');
 
     /**
      * Get current URL
      */
     useEffect(() => {
-        getCurrentTabUrl((url) => {
+        utils.getCurrentTabUrl((url) => {
             setUrl(url || 'undefined');
         })
     }, []);
@@ -23,7 +22,7 @@ export const Home = () => {
         }
 
         // 外に出す
-        getCurrentTabUId((id) => {
+        utils.getCurrentTabUId((id) => {
             id && chrome.tabs.sendMessage(
                 id,
                 message,
@@ -39,7 +38,7 @@ export const Home = () => {
             message: "delete logo",
         }
 
-        getCurrentTabUId((id) => {
+        utils.getCurrentTabUId((id) => {
             id && chrome.tabs.sendMessage(
                 id,
                 message,
@@ -48,11 +47,6 @@ export const Home = () => {
                 });
         });
     };
-
-    const changeBackgroundColor = () => {
-        setFunctionOnCurrentTab(() => { document.body.style.backgroundColor = 'black'; });
-    }
-
 
     return (
         <div className="App">
@@ -64,7 +58,6 @@ export const Home = () => {
                 </p>
                 <button onClick={sendTestMessage}>SEND MESSAGE</button>
                 <button onClick={sendRemoveMessage}>Remove logo</button>
-                <button onClick={changeBackgroundColor}>Change BackgroundColor To Black</button>
                 <p>Response from content:</p>
                 <p>
                     {responseFromContent}
